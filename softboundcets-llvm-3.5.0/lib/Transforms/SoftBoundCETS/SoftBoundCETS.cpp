@@ -3062,6 +3062,7 @@ SoftBoundCETSPass::funcTemporalCheckElimination(Instruction* load_store,
   if(FTCE_map.count(load_store))
     return true;
 
+#if 0
   Value* pointer_operand = getPointerLoadStore(load_store);
 
   Value* gep_source = NULL;
@@ -3074,6 +3075,7 @@ SoftBoundCETSPass::funcTemporalCheckElimination(Instruction* load_store,
   else {
     gep_source = pointer_operand;
   }
+#endif
 
   BasicBlock* bb_curr = load_store->getParent();
   assert(bb_curr && "bb null?");
@@ -4266,7 +4268,6 @@ SoftBoundCETSPass::freeFunctionKeyLock(Function* func, Value* & func_key,
     assert(0 && "inconsistent key lock");
   }
 
-  Function::iterator  bb_begin = func->begin();
   Instruction* next_inst = NULL;
 
   for(Function::iterator b = func->begin(), be = func->end(); b != be ; ++b) {
@@ -4723,9 +4724,6 @@ void SoftBoundCETSPass::handleLoad(LoadInst* load_inst) {
     if(!isa<PointerType>(vector_ty->getElementType()))
        return;
     
-    Value* load_inst_value = load_inst;
-    Instruction* load = load_inst;    
-
     Value* pointer_operand = load_inst->getPointerOperand();
     Instruction* insert_at = getNextInstruction(load_inst);
         
@@ -4863,7 +4861,7 @@ void SoftBoundCETSPass::addBaseBoundGlobals(Module& M){
       continue;
     }
 
-    if(gv->getSection() == "llvm.metadata"){
+    if(StringRef(gv->getSection()) == "llvm.metadata"){
       continue;
     }
     if(gv->getName() == "llvm.global_ctors"){

@@ -2047,8 +2047,8 @@ SoftBoundMPXPass::addLoadStoreChecks(Instruction* load_store,
     // Find all uses of pointer operand, then check if it dominates and
     //if so, make a note in the map
     
-    GlobalVariable* gv = dyn_cast<GlobalVariable>(pointer_operand);    
 #if 0
+    GlobalVariable* gv = dyn_cast<GlobalVariable>(pointer_operand);    
     if(gv && GLOBALCONSTANTOPT && !isa<SequentialType>(gv->getType())) {
       return;
     }
@@ -3210,7 +3210,7 @@ void SoftBoundMPXPass::addBaseBoundGlobals(Module& M){
       continue;
     }
 
-    if(gv->getSection() == "llvm.metadata"){
+    if(StringRef(gv->getSection()) == "llvm.metadata"){
       continue;
     }
     if(gv->getName() == "llvm.global_ctors"){

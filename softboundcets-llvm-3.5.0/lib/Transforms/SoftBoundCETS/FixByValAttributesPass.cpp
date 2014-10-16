@@ -73,7 +73,7 @@ FixByValAttributesPass::createGEPStores(Value* result_alloca,
     std::vector<Value*> new_indices;
     Type* element_type = *I;
     
-    for(int i = 0; i< indices.size(); i++){
+    for(size_t i = 0; i < indices.size(); i++){
       new_indices.push_back(indices[i]);
     }
 

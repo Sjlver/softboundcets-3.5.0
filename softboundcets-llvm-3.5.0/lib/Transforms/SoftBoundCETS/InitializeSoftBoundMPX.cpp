@@ -74,7 +74,6 @@ void InitializeSoftBoundMPX:: constructShadowStackHandlers(Module & module){
   Type* VoidTy = Type::getVoidTy(module.getContext());
   Type* 
     VoidPtrTy = PointerType::getUnqual(Type::getInt8Ty(module.getContext()));
-  Type* SizeTy = Type::getInt64Ty(module.getContext());
   
   Type* Int32Ty = Type::getInt32Ty(module.getContext());
   module.getOrInsertFunction("__softboundmpx_allocate_shadow_stack_space", 
@@ -110,7 +109,6 @@ void InitializeSoftBoundMPX:: constructMetadataHandlers(Module & module){
                              VoidTy, VoidPtrTy, VoidPtrTy, SizeTy, NULL);
 
   Type* PtrVoidPtrTy = PointerType::getUnqual(VoidPtrTy);
-  Type* PtrSizeTy = PointerType::getUnqual(SizeTy);
   
 
   module.getOrInsertFunction("__softboundmpx_metadata_load",
