@@ -15,34 +15,34 @@ Using SoftBoundCETS with LLVM+CLANG-3.5.0 on a x86-64 machine with Linux OS
 
 2. Build SoftBoundCETS for LLVM+CLANG 3.5.0
 
-   1. Goto to directory softboundcetss-llvm-clang34 by executing the following command
+   1. Create a build folder where your objects/binaries will reside
 
-            cd softboundcets-llvm-3.5.0
+            mkdir build
+            cd build
 
    2. Configure LLVM, clang and softboundcets with the following command
 
-            ./configure --enable-assertions --disable-optimized
+            cmake -G Ninja -DLLVM_ENABLE_ASSERTIONS=On ../../softboundcets-llvm-3.5.0
 
-      If you prefer a faster compiler and do not need to debug SoftBoundCETS,
-      use `--enable-optimized`.
+      You can squeeze out a bit more performance by removing the
+      `-DLLVM_ENABLE_ASSERTIONS`.
+
+      If you need to debug SoftBoundCETS, add `-DCMAKE_BUILD_TYPE=Debug`
 
       If you want to use SoftBoundCETS with LTO, follow the instructions at
       http://llvm.org/docs/GoldPlugin.html and add the
-      `--with-binutils-include=/usr/include` parameter. Replace `/usr/include` by
+      `-DLLVM_BINUTILS_INCDIR=/usr/include ` parameter. Replace `/usr/include` by
       the folder that contains the `plugin-api.h` file.
 
    3. Build softboundcets, LLVM, clang with the following command
 
-            make -j8
+            ninja
 
 3. Set up your environment to use SoftBoundCETS
 
    For example in bash, it would be
 
-         export PATH=<git_repo>/softboundcets-llvm-3.5.0/Debug+Asserts/bin:$PATH
-
-   If you compiled an optimized build, the path is `Release+Asserts` instead of
-   `Debug+Asserts`.
+         export PATH=<git_repo>/build/bin:$PATH
 
 4. Compile the SoftBoundCETS runtime library
 
@@ -54,7 +54,7 @@ Using SoftBoundCETS with LLVM+CLANG-3.5.0 on a x86-64 machine with Linux OS
    make, in order to also build the SoftBoundCETS runtime library with LTO
    support.
 
-         export LLVM_GOLD=<git_repo>/softboundcets-llvm-3.5.0/Debug+Asserts/lib/LLVMgold.so
+         export LLVM_GOLD=<git_repo>/build/lib/LLVMgold.so
 
 5. Test whether it all worked
 
