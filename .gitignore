@@ -1,1 +1,6 @@
+# Ignore SoftBoundCETS build files
 build/
+softboundcets-lib/**/*.a
+softboundcets-lib/**/*.o
+tests/test
+tests/test-lto
